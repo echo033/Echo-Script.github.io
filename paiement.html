@@ -1,1 +1,254 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Echo-Script Panier</title>
+    <style>
+        body {
+            font-family: Arial;
+            font-size: 17px;
+            padding: 8px;
+            background-color: #000; /* Fond noir */
+            color: #f4f4f4; /* Texte blanc */
+            position: relative; /* Pour positionner la div de loading */
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -16px;
+        }
+
+        .col-25 {
+            flex: 25%;
+        }
+
+        .col-50 {
+            flex: 50%;
+        }
+
+        .col-75 {
+            flex: 75%;
+        }
+
+        .col-25, .col-50, .col-75 {
+            padding: 0 16px;
+        }
+
+        .container {
+            background-color: #1e1e1e; /* Contenu en gris foncé */
+            padding: 5px 20px 15px 20px;
+            border: 1px solid #333; /* Bordure sombre */
+            border-radius: 3px;
+        }
+
+        input[type=text] {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 12px;
+            border: 1px solid #666; /* Bordure grise */
+            border-radius: 3px;
+            background-color: #333; /* Champ d'entrée gris */
+            color: #f4f4f4; /* Texte blanc */
+        }
+
+        label {
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .icon-container {
+            margin-bottom: 20px;
+            padding: 7px 0;
+            font-size: 24px;
+        }
+
+        .btn {
+            background-color: #04AA6D;
+            color: white;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            width: 100%;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 17px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            color: #2196F3;
+        }
+
+        hr {
+            border: 1px solid #666; /* Ligne grise */
+        }
+
+        span.price {
+            float: right;
+            color: #f4f4f4; /* Prix blanc */
+        }
+
+        .header {
+            padding: 20px;
+            text-align: left; /* Alignement du logo à gauche */
+            background: #000;
+        }
+
+        .logo-img {
+            width: 55px; /* Ajustement de la taille du logo */
+            height: auto; /* Conserve les proportions */
+            /* Vous pouvez ajouter ici un fond vert si souhaité */
+        }
+
+        .footer {
+            background-color: #1e1e1e;
+            text-align: center;
+            padding: 20px;
+            color: #f4f4f4;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Styles pour l'animation de chargement */
+        .loading {
+            display: none; /* Caché par défaut */
+            position: fixed; /* Position fixe */
+            top: 0; 
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8); /* Fond semi-transparent */
+            color: white;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1000; /* Pour être au-dessus des autres éléments */
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f4f4f4; /* Couleur de la bordure */
+            border-top: 5px solid #04AA6D; /* Couleur de la partie en rotation */
+            border-radius: 50%;
+            animation: spin 1s linear infinite; /* Animation de rotation */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 800px) {
+            .row {
+                flex-direction: column-reverse;
+            }
+            .col-25 {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+<div class="header">
+    <a href="index.html"> <!-- Lien vers la page d'accueil -->
+        <img src="test.png" alt="Logo" class="logo-img">
+    </a>    
+</div>
+
+<div class="row">
+    <div class="col-75">
+        <div class="container">
+            <form id="payment-form" onsubmit="showLoading(); return false;">
+                <div class="row">
+                    <div class="col-50">
+                        <h3>Adresse de Facturation</h3>
+                        <label for="fname"><i class="fa fa-user"></i> Nom Complet</label>
+                        <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
+                        <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                        <input type="text" id="email" name="email" placeholder="john@example.com">
+                        <label for="adr"><i class="fa fa-address-card-o"></i> Adresse</label>
+                        <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
+                        <label for="city"><i class="fa fa-institution"></i> Ville</label>
+                        <input type="text" id="city" name="city" placeholder="New York">
+
+                        <div class="row">
+                            <div class="col-50">
+                                <label for="state">Région</label>
+                                <input type="text" id="state" name="state" placeholder="NY">
+                            </div>
+                            <div class="col-50">
+                                <label for="zip">Code Postal</label>
+                                <input type="text" id="zip" name="zip" placeholder="10001">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-50">
+                        <h3>Paiement</h3>
+                        <label for="fname">Paiements Acceptées</label>
+                        <div class="icon-container">
+                            <i class="fa fa-cc-visa" style="color:navy;"></i>
+                            <i class="fa fa-cc-paypal" style="color:rgb(255, 255, 255);"></i>
+                            <i class="fa fa-cc-mastercard" style="color:red;"></i>
+                            <i class="fa fa-cc-discover" style="color:orange;"></i>
+                        </div>
+                        <label for="cname">Nom sur la Carte</label>
+                        <input type="text" id="cname" name="cardname" placeholder="John More Doe">
+                        <label for="ccnum">Numéro de Carte</label>
+                        <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+                        <label for="expmonth">Mois d'Expiration</label>
+                        <input type="text" id="expmonth" name="expmonth" placeholder="Septembre">
+                        <div class="row">
+                            <div class="col-50">
+                                <label for="expyear">Année d'Expiration</label>
+                                <input type="text" id="expyear" name="expyear" placeholder="2024">
+                            </div>
+                            <div class="col-50">
+                                <label for="cvv">CVV</label>
+                                <input type="text" id="cvv" name="cvv" placeholder="352">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <label>
+                    <input type="checkbox" checked="checked" name="sameadr"> Adresse de livraison identique à celle de facturation
+                </label>
+                <input type="submit" value="Continuer vers le paiement" class="btn">
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <h2>Echo Script</h2>
+</div>
+
+<div class="loading" id="loading">
+    <div class="spinner"></div>
+    <p>Chargement...</p>
+</div>
+
+<script>
+    function showLoading() {
+        document.getElementById("loading").style.display = "flex"; // Affiche l'animation de chargement
+        setTimeout(function() {
+            document.getElementById("loading").style.display = "none"; // Cache après 2 secondes
+        }, 2000); // Simule le temps de traitement
+    }
+</script>
+
+</body>
+</html>
 
