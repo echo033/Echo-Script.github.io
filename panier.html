@@ -226,12 +226,11 @@
         localStorage.removeItem('cart'); // Vider le panier
         let cartCount = 0; // Réinitialiser le compteur
         localStorage.setItem('cartCount', cartCount); // Mettre à jour le localStorage
-        document.querySelector('.cart-icon').setAttribute('data-count', cartCount); // Mettre à jour l'affichage du badge
+        updateCartDisplay(); // Mettre à jour l'affichage
     }
 
     document.getElementById('clear-cart').addEventListener('click', () => {
         resetCart(); // Appel à la fonction de réinitialisation du panier
-        updateCartDisplay(); // Mettre à jour l'affichage des articles du panier et le total
     });
 
     // Fonction pour charger les articles du panier et calculer le total
@@ -244,21 +243,18 @@
             cartItemsElement.innerText = 'Aucun produit dans le panier.';
         } else {
             cartItemsElement.innerHTML = cart.map(item => {
-                total += item.price; // Ajouter le prix à total
-                return `<p>${item.name} - $${item.price}</p>`;
+                // Convertir le prix en nombre au cas où ce soit une chaîne
+                const price = parseFloat(item.price); 
+                total += price; // Ajouter le prix au total
+                return `<p>${item.name} - $${price.toFixed(2)}</p>`;
             }).join('');
             document.getElementById('total-price').innerText = `$${total.toFixed(2)}`; // Mettre à jour le total
         }
     }
 
-    // Fonction pour mettre à jour l'affichage
-    function updateCartDisplay() {
-        document.getElementById('cart-items').innerText = 'Aucun produit dans le panier.'; // Réinitialiser l'affichage
-        document.getElementById('total-price').innerText = '$0'; // Réinitialiser le total
-    }
-
-    // Charger les articles du panier à l'ouverture de la page
-    loadCartItems();
+    // Appeler loadCartItems() au chargement de la page pour afficher le panier
+    window.onload = loadCartItems;
 </script>
+
 </body>
 </html>
