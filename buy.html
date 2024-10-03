@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutique en Ligne</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Style global */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #000; /* Fond noir */
+            color: #f4f4f4; /* Couleur du texte */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Barre de navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #111; /* Fond de la barre de navigation */
+            padding: 15px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            color: #f4f4f4;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .navbar .cart-icon {
+            font-size: 24px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        /* Badge du panier */
+        .cart-icon::after {
+            content: attr(data-count);
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            font-size: 14px;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+        /* Section des produits */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 30px;
+        }
+
+        /* Carte produit */
+        .product-card {
+            background-color: #1e1e1e; /* Fond sombre des cartes */
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-card img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .product-card h3 {
+            color: #fff;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .product-card p {
+            color: #aaa;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .product-card .price {
+            color: #f4f4f4;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .product-card button {
+            background-color: #ff0000; /* Bouton rouge pour ajouter au panier */
+            border: none;
+            padding: 10px 20px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .product-card button:hover {
+            background-color: #ff4444;
+        }
+
+        .logo-img {
+            width: 55px; /* Ajuste cette valeur selon la taille souhaitée */
+            height: auto; /* Cela garantit que l'image conserve ses proportions */
+        }
+
+        /* Footer */
+        footer {
+            background-color: #111;
+            color: #818181;
+            text-align: center;
+            padding: 10px;
+            margin-top: auto;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        /* Bouton pour réinitialiser le panier */
+        .reset-cart {
+            background-color: #ff0000; /* Rouge pour le bouton de réinitialisation */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px;
+        }
+
+        .reset-cart:hover {
+            background-color: #ff4444;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Barre de navigation -->
+    <nav class="navbar">
+        <a href="index.html">
+            <img src="test.png" alt="Logo" class="logo-img">
+        </a>        
+        <!-- Modification ici pour rediriger vers la page panier -->
+        <a href="panier.html" class="cart-icon" data-count="0">
+            <i class="fas fa-shopping-cart"></i>
+        </a>
+    </nav>
+
+    <!-- Section des produits -->
+    <section class="products">
+        <!-- Exemple de produit -->
+        <div class="product-card" data-id="1" data-name="Fortnite" data-price="20">
+            <img src="fortnite.png" alt="">
+            <h3>Fortnite</h3>
+            <p>The best Fortnite cheat</p>
+            <div class="price">€20</div>
+            <button onclick="addToCart(this)">Ajouter au panier</button>
+        </div>
+
+        <div class="product-card" data-id="2" data-name="GTA 5" data-price="10">
+            <img src="gta.png" alt="">
+            <h3>GTA 5</h3>
+            <p>The mod menu you want</p>
+            <div class="price">€10</div>
+            <button onclick="addToCart(this)">Ajouter au panier</button>
+        </div>
+
+        <div class="product-card" data-id="3" data-name="SCP SL" data-price="10">
+            <img src="scp.png" alt="">
+            <h3>SCP SL</h3>
+            <p>You will kill moderator</p>
+            <div class="price">€10</div>
+            <button onclick="addToCart(this)">Ajouter au panier</button>
+        </div>
+
+        <!-- Ajoutez d'autres produits de la même manière -->
+    </section>
+
+    <!-- Bouton pour réinitialiser les notifications -->
+    <button class="reset-cart" onclick="resetCart()">Réinitialiser le panier</button>
+
+    <!-- Footer -->
+    <footer>
+        &copy; Echo Script 2024 | <a href="https://discord.gg/dNXDrhuBqc" target="_blank"><i class="fab fa-discord"></i></a>
+    </footer>
+
+    <script>
+        // Fonction pour ajouter au panier
+        let cartCount = localStorage.getItem('cartCount') ? parseInt(localStorage.getItem('cartCount')) : 0;
+
+        // Mettre à jour le badge du panier
+        document.querySelector('.cart-icon').setAttribute('data-count', cartCount);
+
+        function addToCart(button) {
+            const productCard = button.parentElement;
+            const productId = productCard.getAttribute('data-id');
+            const productName = productCard.getAttribute('data-name');
+            const productPrice = productCard.getAttribute('data-price');
+
+            // Créer un objet produit
+            const product = {
+                id: productId,
+                name: productName,
+                price: productPrice
+            };
+
+            // Ajouter le produit au panier dans localStorage
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.push(product);
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            // Incrémenter le compteur du panier
+            cartCount++;
+            localStorage.setItem('cartCount', cartCount);
+            document.querySelector('.cart-icon').setAttribute('data-count', cartCount);
+        }
+
+        // Fonction pour réinitialiser le panier
+        function resetCart() {
+            localStorage.removeItem('cart'); // Vider le panier
+            cartCount = 0; // Réinitialiser le compteur
+            localStorage.setItem('cartCount', cartCount); // Mettre à jour le localStorage
+            document.querySelector('.cart-icon').setAttribute('data-count', cartCount); // Mettre à jour l'affichage du badge
+        }
+    </script>
+
+</body>
+</html>
