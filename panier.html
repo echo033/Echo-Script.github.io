@@ -239,48 +239,42 @@
 </div>
 
 <div class="footer">
-    &copy; Echo Script 2024 | <a href="https://discord.gg/dNXDrhuBqc" target="_blank"><i class="fa fa-discord"></i> Rejoignez notre Discord</a>
+    &copy; Echo Script 2024 | <a href="#">Contact</a>
 </div>
 
-<!-- Animation de chargement -->
+<!-- Div pour l'animation de chargement -->
 <div class="loading" id="loading">
     <div class="spinner"></div>
-    <p>Traitement de votre paiement...</p>
+    <p>Chargement...</p>
 </div>
 
 <script>
-    // Fonction pour valider le formulaire
+    // Affiche l'animation de chargement et masque le reste
+    function showLoading() {
+        document.getElementById('loading').style.display = 'flex';
+        document.getElementById('payment-form').style.display = 'none';
+    }
+
+    // Masque l'animation de chargement
+    function hideLoading() {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('payment-form').style.display = 'block';
+    }
+
+    // Fonction de validation de formulaire
     function validateForm() {
-        var inputs = document.querySelectorAll("#payment-form input[required]");
-        for (var i = 0; i < inputs.length; i++) {
-            if (inputs[i].value === "") {
-                alert("Veuillez remplir tous les champs obligatoires.");
-                return false; // Empêche l'envoi du formulaire si des champs sont vides
-            }
-        }
-        document.getElementById("loading").style.display = "flex"; // Afficher l'animation de chargement
-        return true; // Permet d'envoyer le formulaire
+        // Validez les champs ici
+        // Si tout est bon, affichez l'animation de chargement
+        showLoading();
+        return true; // Remplacez par la logique de validation réelle
     }
 
-    // Fonction pour ajouter des produits au panier (exemple)
-    function addToCart(product) {
-        var cartItems = document.getElementById("cart-items");
-        cartItems.innerHTML += "<div>" + product.name + " - $" + product.price + "</div>"; // Exemple d'ajout de produit
-        updateTotal(product.price); // Met à jour le total
-    }
-
-    // Fonction pour mettre à jour le total
-    function updateTotal(price) {
-        var totalPrice = document.getElementById("total-price");
-        var currentTotal = parseFloat(totalPrice.innerText.replace('$', '')) || 0;
-        totalPrice.innerText = '$' + (currentTotal + price).toFixed(2); // Met à jour le prix total
-    }
-
-    // Fonction pour vider le panier
-    document.getElementById("clear-cart").onclick = function() {
-        document.getElementById("cart-items").innerHTML = "Aucun produit dans le panier."; // Réinitialise les éléments du panier
-        document.getElementById("total-price").innerText = '$0'; // Réinitialise le total
-    };
+    // Ajouter un événement pour vider le panier
+    document.getElementById('clear-cart').addEventListener('click', function() {
+        document.getElementById('cart-items').innerHTML = 'Aucun produit dans le panier.';
+        document.getElementById('total-price').innerHTML = '$0'; // Réinitialisation du total
+    });
 </script>
+
 </body>
 </html>
