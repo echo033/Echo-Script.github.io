@@ -11,6 +11,7 @@
             padding: 8px;
             background-color: #000; /* Fond noir */
             color: #f4f4f4; /* Texte blanc */
+            position: relative; /* Pour positionner la div de loading */
         }
 
         * {
@@ -46,7 +47,7 @@
             border-radius: 3px;
         }
 
-        input[type=text], input[type=email] {
+        input[type=text] {
             width: 100%;
             margin-bottom: 20px;
             padding: 12px;
@@ -105,6 +106,7 @@
         .logo-img {
             width: 55px; /* Ajustement de la taille du logo */
             height: auto; /* Conserve les proportions */
+            /* Vous pouvez ajouter ici un fond vert si souhaité */
         }
 
         .footer {
@@ -117,6 +119,36 @@
             width: 100%;
         }
 
+        /* Styles pour l'animation de chargement */
+        .loading {
+            display: none; /* Caché par défaut */
+            position: fixed; /* Position fixe */
+            top: 0; 
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8); /* Fond semi-transparent */
+            color: white;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1000; /* Pour être au-dessus des autres éléments */
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f4f4f4; /* Couleur de la bordure */
+            border-top: 5px solid #04AA6D; /* Couleur de la partie en rotation */
+            border-radius: 50%;
+            animation: spin 1s linear infinite; /* Animation de rotation */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         @media (max-width: 800px) {
             .row {
                 flex-direction: column-reverse;
@@ -125,44 +157,12 @@
                 margin-bottom: 20px;
             }
         }
-
-        .pp-button {
-            text-align:center;
-            border:none;
-            border-radius:1.5rem;
-            min-width:11.625rem;
-            padding:0 2rem;
-            height:2.625rem;
-            font-weight:bold;
-            background-color:#FFD140;
-            color:#000000;
-            font-family:"Helvetica Neue",Arial,sans-serif;
-            font-size:1rem;
-            line-height:1.25rem;
-            cursor:pointer;
-        }
-
-        .button-container {
-            display: flex; /* Utilise flexbox pour aligner les boutons */
-            justify-content: space-between; /* Espace entre les boutons */
-            margin-top: 20px; /* Marge au-dessus des boutons */
-        }
-
-        .paypal-container {
-            flex: 1; /* Permet au conteneur PayPal de prendre l'espace disponible */
-            margin-right: 10px; /* Marge à droite pour espacer les boutons */
-        }
-
-        .card-container {
-            flex: 1; /* Permet au conteneur Carte de prendre l'espace disponible */
-        }
     </style>
-    <script src="https://www.paypal.com/sdk/js?client-id=ARbCgUioV1SEni2NwAtHOldrdZhEoWE0OLr2ES05cTAQB8EZpt99H41zdSx3LbCByoC5JRaw4hpe69-O"></script> <!-- Remplacez YOUR_CLIENT_ID par votre ID de client -->
 </head>
 <body>
     
 <div class="header">
-    <a href="buy.html">
+    <a href="index.html"> <!-- Lien vers la page d'accueil -->
         <img src="test.png" alt="Logo" class="logo-img">
     </a>    
 </div>
@@ -170,35 +170,27 @@
 <div class="row">
     <div class="col-75">
         <div class="container">
-            <form id="payment-form">
-                <div class="button-container"> <!-- Conteneur pour les boutons -->
-                    <div class="paypal-container">
-                        <div id="paypal-button-container"></div> <!-- Conteneur pour le bouton PayPal -->
-                    </div>
-                    <div class="card-container">
-                        <button type="submit" class="btn">Payer par Carte</button> <!-- Bouton pour payer par carte -->
-                    </div>
-                </div>
+            <form id="payment-form" onsubmit="showLoading(); return false;">
                 <div class="row">
                     <div class="col-50">
                         <h3>Adresse de Facturation</h3>
                         <label for="fname"><i class="fa fa-user"></i> Nom Complet</label>
-                        <input type="text" id="fname" name="firstname" placeholder="John M. Doe" required>
+                        <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
                         <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                        <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                        <input type="text" id="email" name="email" placeholder="john@example.com">
                         <label for="adr"><i class="fa fa-address-card-o"></i> Adresse</label>
-                        <input type="text" id="adr" name="address" placeholder="542 W. 15th Street" required>
+                        <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
                         <label for="city"><i class="fa fa-institution"></i> Ville</label>
-                        <input type="text" id="city" name="city" placeholder="New York" required>
+                        <input type="text" id="city" name="city" placeholder="New York">
 
                         <div class="row">
                             <div class="col-50">
                                 <label for="state">Région</label>
-                                <input type="text" id="state" name="state" placeholder="NY" required>
+                                <input type="text" id="state" name="state" placeholder="NY">
                             </div>
                             <div class="col-50">
                                 <label for="zip">Code Postal</label>
-                                <input type="text" id="zip" name="zip" placeholder="10001" required>
+                                <input type="text" id="zip" name="zip" placeholder="10001">
                             </div>
                         </div>
                     </div>
@@ -213,19 +205,19 @@
                             <i class="fa fa-cc-discover" style="color:orange;"></i>
                         </div>
                         <label for="cname">Nom sur la Carte</label>
-                        <input type="text" id="cname" name="cardname" placeholder="John More Doe" required>
+                        <input type="text" id="cname" name="cardname" placeholder="John More Doe">
                         <label for="ccnum">Numéro de Carte</label>
-                        <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444" required>
+                        <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
                         <label for="expmonth">Mois d'Expiration</label>
-                        <input type="text" id="expmonth" name="expmonth" placeholder="Septembre" required>
+                        <input type="text" id="expmonth" name="expmonth" placeholder="Septembre">
                         <div class="row">
                             <div class="col-50">
                                 <label for="expyear">Année d'Expiration</label>
-                                <input type="text" id="expyear" name="expyear" placeholder="2024" required>
+                                <input type="text" id="expyear" name="expyear" placeholder="2024">
                             </div>
                             <div class="col-50">
                                 <label for="cvv">CVV</label>
-                                <input type="text" id="cvv" name="cvv" placeholder="352" required>
+                                <input type="text" id="cvv" name="cvv" placeholder="352">
                             </div>
                         </div>
                     </div>
@@ -233,43 +225,29 @@
                 <label>
                     <input type="checkbox" checked="checked" name="sameadr"> Adresse de livraison identique à celle de facturation
                 </label>
+                <input type="submit" value="Continuer vers le paiement" class="btn">
             </form>
-        </div>
-    </div>
-    <div class="col-25">
-        <div class="container">
-            <hr>
-            <h4>Prix de l'Article</h4>
-            <p>Article 1 <span class="price">€15.00</span></p>
-            <p>Article 2 <span class="price">€25.00</span></p>
-            <h4>Total <span class="price" style="color:black">€40.00</span></h4>
         </div>
     </div>
 </div>
 
 <div class="footer">
-    <h3>Footer</h3>
-    <p>Merci pour votre commande!</p>
+    <h2>Echo Script</h2>
+</div>
+
+<div class="loading" id="loading">
+    <div class="spinner"></div>
+    <p>Chargement...</p>
 </div>
 
 <script>
-    paypal.Buttons({
-        createOrder: function(data, actions) {
-            return actions.order.create({
-                purchase_units: [{
-                    amount: {
-                        value: '40.00' // Mettez le montant total ici
-                    }
-                }]
-            });
-        },
-        onApprove: function(data, actions) {
-            return actions.order.capture().then(function(details) {
-                alert('Transaction réussie! ' + details.payer.name.given_name);
-                // Ici, vous pouvez ajouter des actions supplémentaires après la transaction
-            });
-        }
-    }).render('#paypal-button-container'); // Remplacez l'ID par celui de votre conteneur
+    function showLoading() {
+        document.getElementById("loading").style.display = "flex"; // Affiche l'animation de chargement
+        setTimeout(function() {
+            document.getElementById("loading").style.display = "none"; // Cache après 2 secondes
+        }, 2000); // Simule le temps de traitement
+    }
 </script>
+
 </body>
 </html>
