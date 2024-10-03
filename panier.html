@@ -11,7 +11,6 @@
             padding: 8px;
             background-color: #000; /* Fond noir */
             color: #f4f4f4; /* Texte blanc */
-            position: relative; /* Pour positionner la div de loading */
         }
 
         * {
@@ -118,36 +117,6 @@
             width: 100%;
         }
 
-        /* Styles pour l'animation de chargement */
-        .loading {
-            display: none; /* Caché par défaut */
-            position: fixed; /* Position fixe */
-            top: 0; 
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.8); /* Fond semi-transparent */
-            color: white;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            z-index: 1000; /* Pour être au-dessus des autres éléments */
-        }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f4f4f4; /* Couleur de la bordure */
-            border-top: 5px solid #04AA6D; /* Couleur de la partie en rotation */
-            border-radius: 50%;
-            animation: spin 1s linear infinite; /* Animation de rotation */
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         @media (max-width: 800px) {
             .row {
                 flex-direction: column-reverse;
@@ -169,7 +138,7 @@
 <div class="row">
     <div class="col-75">
         <div class="container">
-            <form id="payment-form" onsubmit="showLoading(); return false;">
+            <form action="/action_page.php">
                 <div class="row">
                     <div class="col-50">
                         <h3>Adresse de Facturation</h3>
@@ -244,12 +213,6 @@
     &copy; Echo Script 2024 | <a href="https://discord.gg/dNXDrhuBqc" target="_blank"><i class="fab fa-discord"></i></a>
 </div>
 
-<!-- Div pour l'animation de chargement -->
-<div class="loading" id="loading">
-    <div class="spinner"></div>
-    <h2>Paiement en cours...</h2>
-</div>
-
 <script>
     // Fonction pour réinitialiser le panier
     function resetCart() {
@@ -278,14 +241,6 @@
             }).join('');
             document.getElementById('total-price').innerText = $${total.toFixed(2)}; // Mettre à jour le total
         }
-    }
-
-    // Fonction pour afficher l'animation de chargement et rediriger vers la page de paiement
-    function showLoading() {
-        document.getElementById('loading').style.display = 'flex'; // Afficher l'animation
-        setTimeout(() => {
-            window.location.href = 'paiement.html'; // Rediriger vers la page de paiement
-        }, 2000); // Délai de 2 secondes
     }
 
     // Appeler loadCartItems() au chargement de la page pour afficher le panier
