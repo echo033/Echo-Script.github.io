@@ -169,27 +169,27 @@
 <div class="row">
     <div class="col-75">
         <div class="container">
-            <form id="payment-form" onsubmit="return validateForm();">
+            <form id="payment-form" onsubmit="showLoading(); return false;">
                 <div class="row">
                     <div class="col-50">
                         <h3>Adresse de Facturation</h3>
                         <label for="fname"><i class="fa fa-user"></i> Nom Complet</label>
-                        <input type="text" id="fname" name="firstname" placeholder="John M. Doe" required>
+                        <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
                         <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                        <input type="text" id="email" name="email" placeholder="john@example.com" required>
+                        <input type="text" id="email" name="email" placeholder="john@example.com">
                         <label for="adr"><i class="fa fa-address-card-o"></i> Adresse</label>
-                        <input type="text" id="adr" name="address" placeholder="542 W. 15th Street" required>
+                        <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
                         <label for="city"><i class="fa fa-institution"></i> Ville</label>
-                        <input type="text" id="city" name="city" placeholder="New York" required>
+                        <input type="text" id="city" name="city" placeholder="New York">
 
                         <div class="row">
                             <div class="col-50">
                                 <label for="state">Région</label>
-                                <input type="text" id="state" name="state" placeholder="NY" required>
+                                <input type="text" id="state" name="state" placeholder="NY">
                             </div>
                             <div class="col-50">
                                 <label for="zip">Code Postal</label>
-                                <input type="text" id="zip" name="zip" placeholder="10001" required>
+                                <input type="text" id="zip" name="zip" placeholder="10001">
                             </div>
                         </div>
                     </div>
@@ -204,17 +204,19 @@
                             <i class="fa fa-cc-discover" style="color:orange;"></i>
                         </div>
                         <label for="cname">Nom sur la Carte</label>
-                        <input type="text" id="cname" name="cardname" placeholder="John More Doe" required>
+                        <input type="text" id="cname" name="cardname" placeholder="John More Doe">
                         <label for="ccnum">Numéro de Carte</label>
-                        <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444" required>
+                        <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+                        <label for="expmonth">Mois d'Expiration</label>
+                        <input type="text" id="expmonth" name="expmonth" placeholder="Septembre">
                         <div class="row">
                             <div class="col-50">
                                 <label for="expyear">Année d'Expiration</label>
-                                <input type="text" id="expyear" name="expyear" placeholder="2024" required>
+                                <input type="text" id="expyear" name="expyear" placeholder="2024">
                             </div>
                             <div class="col-50">
                                 <label for="cvv">CVV</label>
-                                <input type="text" id="cvv" name="cvv" placeholder="352" required>
+                                <input type="text" id="cvv" name="cvv" placeholder="352">
                             </div>
                         </div>
                     </div>
@@ -239,41 +241,55 @@
 </div>
 
 <div class="footer">
-    &copy; Echo Script 2024 | <a href="#">Contact</a>
+    &copy; Echo Script 2024 | <a href="https://discord.gg/dNXDrhuBqc" target="_blank"><i class="fab fa-discord"></i></a>
 </div>
 
 <!-- Div pour l'animation de chargement -->
 <div class="loading" id="loading">
     <div class="spinner"></div>
-    <p>Chargement...</p>
+    <h2>Paiement en cours...</h2>
 </div>
 
 <script>
-    // Affiche l'animation de chargement et masque le reste
+    // Fonction pour réinitialiser le panier
+    function resetCart() {
+        localStorage.removeItem('cart'); // Vider le panier
+        document.getElementById('cart-items').innerText = 'Aucun produit dans le panier.'; // Réinitialiser l'affichage
+        document.getElementById('total-price').innerText = '$0'; // Réinitialiser le total
+    }
+
+    document.getElementById('clear-cart').addEventListener('click', resetCart); // Écouteur d'événements pour le bouton Vider le panier
+
+    // Fonction pour charger les articles du panier et calculer le total
+    function loadCartItems() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || []; // Récupérer le panier
+        const cartItemsElement = document.getElementById('cart-items');
+        let total = 0; // Initialiser le total
+
+        if (cart.length === 0) {
+            cartItemsElement.innerText = 'Aucun produit dans le panier.';
+            document.getElementById('total-price').innerText = '$0'; // Réinitialiser le total
+        } else {
+            cartItemsElement.innerHTML = cart.map(item => {
+                // Convertir le prix en nombre au cas où ce soit une chaîne
+                const price = parseFloat(item.price); 
+                total += price; // Ajouter le prix au total
+                return <p>${item.name} - $${price.toFixed(2)}</p>;
+            }).join('');
+            document.getElementById('total-price').innerText = $${total.toFixed(2)}; // Mettre à jour le total
+        }
+    }
+
+    // Fonction pour afficher l'animation de chargement et rediriger vers la page de paiement
     function showLoading() {
-        document.getElementById('loading').style.display = 'flex';
-        document.getElementById('payment-form').style.display = 'none';
+        document.getElementById('loading').style.display = 'flex'; // Afficher l'animation
+        setTimeout(() => {
+            window.location.href = 'paiement.html'; // Rediriger vers la page de paiement
+        }, 2000); // Délai de 2 secondes
     }
 
-    // Masque l'animation de chargement
-    function hideLoading() {
-        document.getElementById('loading').style.display = 'none';
-        document.getElementById('payment-form').style.display = 'block';
-    }
-
-    // Fonction de validation de formulaire
-    function validateForm() {
-        // Validez les champs ici
-        // Si tout est bon, affichez l'animation de chargement
-        showLoading();
-        return true; // Remplacez par la logique de validation réelle
-    }
-
-    // Ajouter un événement pour vider le panier
-    document.getElementById('clear-cart').addEventListener('click', function() {
-        document.getElementById('cart-items').innerHTML = 'Aucun produit dans le panier.';
-        document.getElementById('total-price').innerHTML = '$0'; // Réinitialisation du total
-    });
+    // Appeler loadCartItems() au chargement de la page pour afficher le panier
+    window.onload = loadCartItems;
 </script>
 
 </body>
