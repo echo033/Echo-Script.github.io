@@ -135,22 +135,6 @@
             color: #fff;
             text-decoration: none;
         }
-
-        /* Bouton pour réinitialiser le panier */
-        .reset-cart {
-            background-color: #ff0000; /* Rouge pour le bouton de réinitialisation */
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 20px;
-        }
-
-        .reset-cart:hover {
-            background-color: #ff4444;
-        }
-
     </style>
 </head>
 <body>
@@ -196,9 +180,6 @@
         <!-- Ajoutez d'autres produits de la même manière -->
     </section>
 
-    <!-- Bouton pour réinitialiser les notifications -->
-    <button class="reset-cart" onclick="resetCart()">Réinitialiser le panier</button>
-
     <!-- Footer -->
     <footer>
         &copy; Echo Script 2024 | <a href="https://discord.gg/dNXDrhuBqc" target="_blank"><i class="fab fa-discord"></i></a>
@@ -230,14 +211,6 @@
             cartCount++;
             localStorage.setItem('cartCount', cartCount);
             document.querySelector('.cart-icon').setAttribute('data-count', cartCount);
-        }
-
-        // Fonction pour réinitialiser le panier
-        function resetCart() {
-            localStorage.removeItem('cart'); // Vider le panier
-            cartCount = 0; // Réinitialiser le compteur
-            localStorage.setItem('cartCount', cartCount); // Mettre à jour le localStorage
-            document.querySelector('.cart-icon').setAttribute('data-count', cartCount); // Mettre à jour l'affichage du badge
         }
     </script>
 
