@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -18,31 +18,24 @@
         }
 
         .row {
-            display: -ms-flexbox; /* IE10 */
             display: flex;
-            -ms-flex-wrap: wrap; /* IE10 */
             flex-wrap: wrap;
             margin: 0 -16px;
         }
 
         .col-25 {
-            -ms-flex: 25%; /* IE10 */
             flex: 25%;
         }
 
         .col-50 {
-            -ms-flex: 50%; /* IE10 */
             flex: 50%;
         }
 
         .col-75 {
-            -ms-flex: 75%; /* IE10 */
             flex: 75%;
         }
 
-        .col-25,
-        .col-50,
-        .col-75 {
+        .col-25, .col-50, .col-75 {
             padding: 0 16px;
         }
 
@@ -224,14 +217,11 @@
     // Fonction pour réinitialiser le panier
     function resetCart() {
         localStorage.removeItem('cart'); // Vider le panier
-        let cartCount = 0; // Réinitialiser le compteur
-        localStorage.setItem('cartCount', cartCount); // Mettre à jour le localStorage
-        updateCartDisplay(); // Mettre à jour l'affichage
+        document.getElementById('cart-items').innerText = 'Aucun produit dans le panier.'; // Réinitialiser l'affichage
+        document.getElementById('total-price').innerText = '$0'; // Réinitialiser le total
     }
 
-    document.getElementById('clear-cart').addEventListener('click', () => {
-        resetCart(); // Appel à la fonction de réinitialisation du panier
-    });
+    document.getElementById('clear-cart').addEventListener('click', resetCart); // Écouteur d'événements pour le bouton Vider le panier
 
     // Fonction pour charger les articles du panier et calculer le total
     function loadCartItems() {
@@ -241,6 +231,7 @@
 
         if (cart.length === 0) {
             cartItemsElement.innerText = 'Aucun produit dans le panier.';
+            document.getElementById('total-price').innerText = '$0'; // Réinitialiser le total
         } else {
             cartItemsElement.innerHTML = cart.map(item => {
                 // Convertir le prix en nombre au cas où ce soit une chaîne
