@@ -106,7 +106,6 @@
         .logo-img {
             width: 55px; /* Ajustement de la taille du logo */
             height: auto; /* Conserve les proportions */
-            /* Vous pouvez ajouter ici un fond vert si souhaité */
         }
 
         .footer {
@@ -162,7 +161,7 @@
 <body>
     
 <div class="header">
-    <a href="index.html"> <!-- Lien vers la page d'accueil -->
+    <a href="buy.html">
         <img src="test.png" alt="Logo" class="logo-img">
     </a>    
 </div>
@@ -170,27 +169,27 @@
 <div class="row">
     <div class="col-75">
         <div class="container">
-            <form id="payment-form" onsubmit="showLoading(); return false;">
+            <form id="payment-form" onsubmit="return validateForm();">
                 <div class="row">
                     <div class="col-50">
                         <h3>Adresse de Facturation</h3>
                         <label for="fname"><i class="fa fa-user"></i> Nom Complet</label>
-                        <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
+                        <input type="text" id="fname" name="firstname" placeholder="John M. Doe" required>
                         <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                        <input type="text" id="email" name="email" placeholder="john@example.com">
+                        <input type="text" id="email" name="email" placeholder="john@example.com" required>
                         <label for="adr"><i class="fa fa-address-card-o"></i> Adresse</label>
-                        <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
+                        <input type="text" id="adr" name="address" placeholder="542 W. 15th Street" required>
                         <label for="city"><i class="fa fa-institution"></i> Ville</label>
-                        <input type="text" id="city" name="city" placeholder="New York">
+                        <input type="text" id="city" name="city" placeholder="New York" required>
 
                         <div class="row">
                             <div class="col-50">
                                 <label for="state">Région</label>
-                                <input type="text" id="state" name="state" placeholder="NY">
+                                <input type="text" id="state" name="state" placeholder="NY" required>
                             </div>
                             <div class="col-50">
                                 <label for="zip">Code Postal</label>
-                                <input type="text" id="zip" name="zip" placeholder="10001">
+                                <input type="text" id="zip" name="zip" placeholder="10001" required>
                             </div>
                         </div>
                     </div>
@@ -205,19 +204,17 @@
                             <i class="fa fa-cc-discover" style="color:orange;"></i>
                         </div>
                         <label for="cname">Nom sur la Carte</label>
-                        <input type="text" id="cname" name="cardname" placeholder="John More Doe">
+                        <input type="text" id="cname" name="cardname" placeholder="John More Doe" required>
                         <label for="ccnum">Numéro de Carte</label>
-                        <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
-                        <label for="expmonth">Mois d'Expiration</label>
-                        <input type="text" id="expmonth" name="expmonth" placeholder="Septembre">
+                        <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444" required>
                         <div class="row">
                             <div class="col-50">
                                 <label for="expyear">Année d'Expiration</label>
-                                <input type="text" id="expyear" name="expyear" placeholder="2024">
+                                <input type="text" id="expyear" name="expyear" placeholder="2024" required>
                             </div>
                             <div class="col-50">
                                 <label for="cvv">CVV</label>
-                                <input type="text" id="cvv" name="cvv" placeholder="352">
+                                <input type="text" id="cvv" name="cvv" placeholder="352" required>
                             </div>
                         </div>
                     </div>
@@ -229,24 +226,54 @@
             </form>
         </div>
     </div>
+    <div class="col-25">
+        <div class="container">
+            <hr>
+            <h3>Produits dans le panier</h3>
+            <div id="cart-items">Aucun produit dans le panier.</div> <!-- Ajout de cette ligne -->
+            <hr>
+            <p>Total <span class="price" style="color:white"><b id="total-price">$0</b></span></p> <!-- Ajout d'un ID pour le total -->
+            <button id="clear-cart" class="btn">Vider le panier</button>
+        </div>
+    </div>
 </div>
 
 <div class="footer">
-    <h2>Echo Script</h2>
+    &copy; Echo Script 2024 | <a href="#">Contact</a>
 </div>
 
+<!-- Div pour l'animation de chargement -->
 <div class="loading" id="loading">
     <div class="spinner"></div>
     <p>Chargement...</p>
 </div>
 
 <script>
+    // Affiche l'animation de chargement et masque le reste
     function showLoading() {
-        document.getElementById("loading").style.display = "flex"; // Affiche l'animation de chargement
-        setTimeout(function() {
-            document.getElementById("loading").style.display = "none"; // Cache après 2 secondes
-        }, 2000); // Simule le temps de traitement
+        document.getElementById('loading').style.display = 'flex';
+        document.getElementById('payment-form').style.display = 'none';
     }
+
+    // Masque l'animation de chargement
+    function hideLoading() {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('payment-form').style.display = 'block';
+    }
+
+    // Fonction de validation de formulaire
+    function validateForm() {
+        // Validez les champs ici
+        // Si tout est bon, affichez l'animation de chargement
+        showLoading();
+        return true; // Remplacez par la logique de validation réelle
+    }
+
+    // Ajouter un événement pour vider le panier
+    document.getElementById('clear-cart').addEventListener('click', function() {
+        document.getElementById('cart-items').innerHTML = 'Aucun produit dans le panier.';
+        document.getElementById('total-price').innerHTML = '$0'; // Réinitialisation du total
+    });
 </script>
 
 </body>
