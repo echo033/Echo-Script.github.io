@@ -171,6 +171,14 @@
     <div class="col-75">
         <div class="container">
             <form id="payment-form">
+                <div class="button-container"> <!-- Conteneur pour les boutons -->
+                    <div class="paypal-container">
+                        <div id="paypal-button-container"></div> <!-- Conteneur pour le bouton PayPal -->
+                    </div>
+                    <div class="card-container">
+                        <button type="submit" class="btn">Payer par Carte</button> <!-- Bouton pour payer par carte -->
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-50">
                         <h3>Adresse de Facturation</h3>
@@ -225,14 +233,6 @@
                 <label>
                     <input type="checkbox" checked="checked" name="sameadr"> Adresse de livraison identique à celle de facturation
                 </label>
-                <div class="button-container"> <!-- Conteneur pour les boutons -->
-                    <div class="paypal-container">
-                        <div id="paypal-button-container"></div> <!-- Conteneur pour le bouton PayPal -->
-                    </div>
-                    <div class="card-container">
-                        <button type="submit" class="btn">Payer par Carte</button> <!-- Bouton pour payer par carte -->
-                    </div>
-                </div>
             </form>
         </div>
     </div>
@@ -240,37 +240,36 @@
         <div class="container">
             <hr>
             <h4>Prix de l'Article</h4>
-            <p>Article <span class="price">€15</span></p>
-            <p>Livraison <span class="price">Gratuit</span></p>
-            <hr>
-            <p>Total <span class="price">€15</span></p>
+            <p>Article 1 <span class="price">€15.00</span></p>
+            <p>Article 2 <span class="price">€25.00</span></p>
+            <h4>Total <span class="price" style="color:black">€40.00</span></h4>
         </div>
     </div>
 </div>
 
 <div class="footer">
-    <h2>Echo-Script</h2>
+    <h3>Footer</h3>
+    <p>Merci pour votre commande!</p>
 </div>
 
 <script>
-    // Configuration du bouton PayPal
     paypal.Buttons({
         createOrder: function(data, actions) {
             return actions.order.create({
                 purchase_units: [{
                     amount: {
-                        value: '15.00'
+                        value: '40.00' // Mettez le montant total ici
                     }
                 }]
             });
         },
         onApprove: function(data, actions) {
             return actions.order.capture().then(function(details) {
-                alert('Transaction réussie par ' + details.payer.name.given_name);
+                alert('Transaction réussie! ' + details.payer.name.given_name);
+                // Ici, vous pouvez ajouter des actions supplémentaires après la transaction
             });
         }
-    }).render('#paypal-button-container'); // Affiche le bouton PayPal
+    }).render('#paypal-button-container'); // Remplacez l'ID par celui de votre conteneur
 </script>
-
 </body>
 </html>
