@@ -208,9 +208,6 @@
         // Fonction pour ajouter au panier
         let cartCount = localStorage.getItem('cartCount') ? parseInt(localStorage.getItem('cartCount')) : 0;
 
-        // Mettre à jour le badge du panier
-        document.querySelector('.cart-icon').setAttribute('data-count', cartCount);
-
         function addToCart(button) {
             const productCard = button.parentElement;
             const productId = productCard.getAttribute('data-id');
