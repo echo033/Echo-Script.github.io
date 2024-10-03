@@ -8,14 +8,14 @@
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background-color: #000;
-            color: #f4f4f4;
+            background-color: #000; 
+            color: #f4f4f4; 
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden;
+            min-height: 100vh; 
+            overflow-x: hidden; 
         }
 
         h1 {
@@ -23,27 +23,27 @@
         }
 
         .parallax {
-            background-image: url('image.png');
-            min-height: 500px;
-            background-attachment: fixed;
-            background-position: top;
+            background-image: url('C:/Users/robin/Desktop/site/image.png'); 
+            min-height: 500px; 
+            background-attachment: fixed; 
+            background-position: top; 
             background-repeat: no-repeat;
-            background-size: cover;
+            background-size: cover; 
         }
 
         .logo {
             position: absolute;
-            top: 20px;
-            left: 20px;
+            top: 20px; 
+            left: 20px; 
             height: 40px;
-            cursor: pointer;
+            cursor: pointer; 
         }
 
         .sidebar-logo {
             position: absolute;
-            top: 10px;
-            left: 10px;
-            height: 40px;
+            top: 10px; 
+            left: 10px; 
+            height: 40px; 
         }
 
         .open-button {
@@ -61,7 +61,7 @@
             position: fixed;
             z-index: 1;
             top: 0;
-            left: 0;
+            left: 0; 
             background-color: #111;
             overflow-x: hidden;
             transition: 0.5s;
@@ -92,7 +92,7 @@
         #main {
             padding: 16px;
             transition: margin-left 0.5s;
-            flex: 1;
+            flex: 1; 
             background-color: #000;
         }
 
@@ -104,83 +104,45 @@
             overflow: auto;
             position: relative;
             margin: 20px 0;
-            white-space: pre-wrap;
+            white-space: pre-wrap; /* Pour conserver les sauts de ligne et les espaces */
         }
 
         /* Style du footer */
         footer {
-            background-color: #111;
-            color: #818181;
-            text-align: center;
-            padding: 10px;
-            position: relative;
-            transition: transform 0.3s;
-            transform: translateY(0);
+            background-color: #111; /* Fond du footer */
+            color: #818181; /* Couleur du texte du footer */
+            text-align: center; /* Centre le texte */
+            padding: 10px; /* Espacement interne */
+            position: relative; /* Positionnement normal */
+            transition: transform 0.3s; /* Transition douce pour le mouvement */
+            transform: translateY(0); /* Position initiale */
         }
 
+        /* Logo en dessous du footer */
         .footer-logo {
-            display: block;
-            margin: 10px auto;
-            height: 40px;
+            display: block; /* Affiche le logo */
+            margin: 10px auto; /* Centre le logo */
+            height: 40px; /* Hauteur du logo */
         }
 
+        /* Icône Discord à gauche dans le footer */
         .discord-icon {
             font-size: 24px;
-            color: #7289da;
+            color: #7289da; /* Couleur de l'icône Discord */
             position: absolute;
-            left: 850px;
-            top: 30px;
+            left: 850px; /* Positionne l'icône à gauche */
+            top: 30px; /* Positionne l'icône en haut du footer */
             cursor: pointer;
         }
 
+        /* Icône YouTube à droite dans le footer */
         .youtube-icon {
             font-size: 24px;
-            color: #ff0000;
+            color: #ff0000; /* Couleur de l'icône YouTube (rouge) */
             position: absolute;
-            right: 850px;
-            top: 30px;
+            right: 850px; /* Positionne l'icône à droite */
+            top: 30px; /* Positionne l'icône en haut du footer */
             cursor: pointer;
-        }
-
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropbtn {
-            background-color: #111;
-            color: #818181;
-            padding: 16px;
-            font-size: 25px;
-            border: none;
-            cursor: pointer;
-            text-align: left;
-            width: 100%;
-            outline: none;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #111;
-            min-width: 160px;
-            z-index: 1;
-            margin-left: 32px;
-        }
-
-        .dropdown-content a {
-            color: #818181;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #575757;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
         }
     </style>
 </head>
@@ -188,116 +150,91 @@
 
     <!-- Lien vers index.html lors du clic sur le logo -->
     <a href="index.html">
-        <img src="test.png" alt="Logo" class="logo">
+        <img src="C:\Users\robin\Desktop\site\test.png" alt="Logo" class="logo"> <!-- Remplacez par le chemin de votre logo -->
     </a>
 
     <!-- Bouton pour ouvrir la sidebar en haut à droite -->
     <span class="open-button" onclick="openNav()">&#9776;</span>
 
     <div id="mySidenav" class="sidenav">
-        <img src="test.png" alt="Logo" class="sidebar-logo">
+        <img src="C:\Users\robin\Desktop\site\test.png" alt="Logo" class="sidebar-logo"> <!-- Logo en haut à gauche de la sidebar -->
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="index.html" id="home-link">Home</a>
-        <a href="cheat.html" id="cheat-link">Cheat</a>
-        <a href="buy.html" id="buy-link">Buy</a>
-        <a href="contact.html" id="contact-link">Contact</a>
-        
-        <!-- Dropdown de langue -->
-        <div class="dropdown">
-            <button class="dropbtn" id="language-label">Langue</button>
-            <div class="dropdown-content">
-                <a href="#" onclick="changeLanguage('fr')">
-                    <i class="fas fa-globe"></i> Français
-                </a>
-                <a href="#" onclick="changeLanguage('en')">
-                    <i class="fas fa-globe"></i> English
-                </a>
-                <a href="#" onclick="changeLanguage('es')">
-                    <i class="fas fa-globe"></i> Español
-                </a>
-            </div>
-        </div>
+        <a href="index.html">Home</a>
+        <a href="Cheat.html">Cheat</a>
+        <a href="buy.html">Buy</a>
+        <a href="#">Contact</a>
     </div>
 
     <!-- Contenu principal -->
     <div id="main">
-        <h1 id="header-text">Echo - Script</h1>
+        <h1>Echo - Script</h1>
+        
+        <!-- Image Parallax -->
         <div class="parallax"></div>
-        <pre id="codeBlock"></pre>
+
+        <!-- Intégration du Typewriter -->
+        <pre id="codeBlock"></pre> <!-- Element pré pour le typewriter -->
+
+        <script>
+            var i = 0;
+            var txt = '# we are the new best script seller for your favorite games, with cheap pricess, go in ur discord for question and buy more faster';
+            var speed = 50;
+
+            function typeWriter() {
+                if (i < txt.length) {
+                    document.getElementById("codeBlock").innerHTML += txt.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                }
+            }
+
+            // Appeler la fonction typeWriter() automatiquement au chargement de la page
+            window.onload = function() {
+                typeWriter();
+            };
+        </script>
     </div>
 
     <footer id="footer">
-        <a href="https://discord.gg/dNXDrhuBqc" target="_blank">
-            <i class='fab fa-discord discord-icon'></i>
+        <a href="https://discord.gg/dNXDrhuBqc" target="_blank"> <!-- Lien vers Discord -->
+            <i class='fab fa-discord discord-icon'></i> <!-- Icône Discord à gauche du footer -->
         </a>
         &copy; Echo-Script 2024
-        <img src="test.png" alt="Logo" class="footer-logo">
-        <a href="https://www.youtube.com" target="_blank">
-            <i class='fab fa-youtube youtube-icon'></i>
+        <img src="C:\Users\robin\Desktop\site\test.png" alt="Logo" class="footer-logo"> <!-- Logo en dessous du footer -->
+        <a href="https://www.youtube.com" target="_blank"> <!-- Lien vers YouTube -->
+            <i class='fab fa-youtube youtube-icon'></i> <!-- Icône YouTube à droite du footer -->
         </a>
     </footer>
 
     <script>
-        var langData = {
-            fr: {
-                home: "Accueil",
-                cheat: "Tricher",
-                buy: "Acheter",
-                contact: "Contact",
-                header: "Echo - Script",
-                typewriter_text: "# Nous sommes les nouveaux meilleurs vendeurs de scripts pour vos jeux préférés, avec des prix bon marché. Rendez-vous sur notre Discord pour plus de questions et achetez plus rapidement."
-            },
-            en: {
-                home: "Home",
-                cheat: "Cheat",
-                buy: "Buy",
-                contact: "Contact",
-                header: "Echo - Script",
-                typewriter_text: "# We are the new best script sellers for your favorite games, with cheap prices. Go to our Discord for questions and buy faster."
-            },
-            es: {
-                home: "Inicio",
-                cheat: "Truco",
-                buy: "Comprar",
-                contact: "Contacto",
-                header: "Echo - Script",
-                typewriter_text: "# Somos los nuevos mejores vendedores de scripts para tus juegos favoritos, con precios baratos. Ve a nuestro Discord para preguntas y compra más rápido."
+        // Gérer l'affichage du footer
+        let lastScrollTop = 0; // Dernière position de défilement
+        const footer = document.getElementById('footer');
+
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop) {
+                // Défilement vers le bas
+                footer.style.transform = 'translateY(100%)'; // Masque le footer
+            } else {
+                // Défilement vers le haut
+                footer.style.transform = 'translateY(0)'; // Affiche le footer
             }
-        };
-
-        function changeLanguage(lang) {
-            document.getElementById('home-link').textContent = langData[lang].home;
-            document.getElementById('cheat-link').textContent = langData[lang].cheat;
-            document.getElementById('buy-link').textContent = langData[lang].buy;
-            document.getElementById('contact-link').textContent = langData[lang].contact;
-            document.getElementById('header-text').textContent = langData[lang].header;
-            document.getElementById('codeBlock').textContent = langData[lang].typewriter_text;
-        }
-
-        // Initialisation du typewriter
-        var i = 0;
-        var txt = langData['fr'].typewriter_text; 
-        var speed = 50;
-
-        function typeWriter() {
-            if (i < txt.length) {
-                document.getElementById("codeBlock").innerHTML += txt.charAt(i);
-                i++;
-                setTimeout(typeWriter, speed);
-            }
-        }
-
-        window.onload = function() {
-            typeWriter();
-        };
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Pour éviter les valeurs négatives
+        });
 
         function openNav() {
             document.getElementById("mySidenav").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px"; /* Déplacer le contenu à droite quand la sidebar est ouverte */
+            document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
         }
 
         function closeNav() {
             document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0"; /* Remettre le contenu à sa place quand la sidebar est fermée */
+            document.body.style.backgroundColor = "#000";
         }
     </script>
+
 </body>
 </html>
