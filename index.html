@@ -8,14 +8,14 @@
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background-color: #000; 
-            color: #f4f4f4; 
+            background-color: #000;
+            color: #f4f4f4;
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
-            min-height: 100vh; 
-            overflow-x: hidden; 
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
         h1 {
@@ -23,27 +23,27 @@
         }
 
         .parallax {
-            background-image: url('image.png'); 
-            min-height: 500px; 
-            background-attachment: fixed; 
-            background-position: top; 
+            background-image: url('image.png');
+            min-height: 500px;
+            background-attachment: fixed;
+            background-position: top;
             background-repeat: no-repeat;
-            background-size: cover; 
+            background-size: cover;
         }
 
         .logo {
             position: absolute;
-            top: 20px; 
-            left: 20px; 
+            top: 20px;
+            left: 20px;
             height: 40px;
-            cursor: pointer; 
+            cursor: pointer;
         }
 
         .sidebar-logo {
             position: absolute;
-            top: 10px; 
-            left: 10px; 
-            height: 40px; 
+            top: 10px;
+            left: 10px;
+            height: 40px;
         }
 
         .open-button {
@@ -61,7 +61,7 @@
             position: fixed;
             z-index: 1;
             top: 0;
-            left: 0; 
+            left: 0;
             background-color: #111;
             overflow-x: hidden;
             transition: 0.5s;
@@ -92,7 +92,7 @@
         #main {
             padding: 16px;
             transition: margin-left 0.5s;
-            flex: 1; 
+            flex: 1;
             background-color: #000;
         }
 
@@ -196,25 +196,25 @@
     <div id="mySidenav" class="sidenav">
         <img src="test.png" alt="Logo" class="sidebar-logo">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="index.html">Home</a>
-        <a href="Cheat.html">Cheat</a>
-        <a href="buy.html">Buy</a>
-        <a href="#">Contact</a>
+        <a href="#" id="home-link">Home</a>
+        <a href="#" id="cheat-link">Cheat</a>
+        <a href="#" id="buy-link">Buy</a>
+        <a href="#" id="contact-link">Contact</a>
 
         <!-- Dropdown pour le choix de langue -->
         <div class="dropdown">
-            <a href="javascript:void(0)" class="dropbtn">Langue
+            <a href="javascript:void(0)" class="dropbtn" id="language-label">Language
                 <i class="fas fa-caret-down"></i>
             </a>
             <div class="dropdown-content">
                 <a href="#" onclick="changeLanguage('en')">
-                    <i class="fas fa-flag-usa"></i> Anglais
+                    <i class="fas fa-flag-usa"></i> English
                 </a>
                 <a href="#" onclick="changeLanguage('es')">
-                    <i class="fas fa-flag"></i> Espagnol
+                    <i class="fas fa-flag"></i> Español
                 </a>
                 <a href="#" onclick="changeLanguage('de')">
-                    <i class="fas fa-flag"></i> Allemand
+                    <i class="fas fa-flag"></i> Deutsch
                 </a>
             </div>
         </div>
@@ -249,16 +249,37 @@
 
     <footer id="footer">
         <a href="https://discord.gg/dNXDrhuBqc" target="_blank">
-            <i class="fab fa-discord discord-icon"></i>
+            <i class='fab fa-discord discord-icon'></i>
         </a>
         &copy; Echo-Script 2024
         <img src="test.png" alt="Logo" class="footer-logo">
         <a href="https://www.youtube.com" target="_blank">
-            <i class="fab fa-youtube youtube-icon"></i>
+            <i class='fab fa-youtube youtube-icon'></i>
         </a>
     </footer>
 
     <script>
+        let langData;
+
+        fetch('lang.json')
+            .then(response => response.json())
+            .then(data => {
+                langData = data;
+                const userLang = navigator.language || navigator.userLanguage; 
+                const initialLang = userLang.startsWith('es') ? 'es' : userLang.startsWith('de') ? 'de' : 'en';
+                changeLanguage(initialLang);
+            });
+
+        function changeLanguage(lang) {
+            document.getElementById('home-link').textContent = langData[lang].home;
+            document.getElementById('cheat-link').textContent = langData[lang].cheat;
+            document.getElementById('buy-link').textContent = langData[lang].buy;
+            document.getElementById('contact-link').textContent = langData[lang].contact;
+            document.getElementById('header-text').textContent = langData[lang].header;
+            document.getElementById('codeBlock').textContent = langData[lang].typewriter_text;
+            document.getElementById('language-label').textContent = langData[lang].language;
+        }
+
         function openNav() {
             document.getElementById("mySidenav").style.width = "250px";
             document.getElementById("main").style.marginLeft = "250px";
@@ -270,26 +291,7 @@
             document.getElementById("main").style.marginLeft = "0";
             document.body.style.backgroundColor = "#000";
         }
-
-        function changeLanguage(lang) {
-            var translations = {
-                'en': {
-                    header: 'Echo - Script',
-                    typewriter: '# we are the new best script seller for your favorite games, with cheap prices. Go to our Discord for questions and to buy faster.'
-                },
-                'es': {
-                    header: 'Echo - Script',
-                    typewriter: '# Somos los mejores vendedores de scripts para tus juegos favoritos, con precios baratos. Ve a nuestro Discord para preguntas y compra más rápido.'
-                },
-                'de': {
-                    header: 'Echo - Script',
-                    typewriter: '# Wir sind die besten Skripthändler für deine Lieblingsspiele, mit günstigen Preisen. Besuche unseren Discord für Fragen und schnelleres Kaufen.'
-                }
-            };
-
-            document.getElementById('header-text').innerText = translations[lang].header;
-            document.getElementById('codeBlock').innerText = translations[lang].typewriter;
-        }
     </script>
+
 </body>
 </html>
