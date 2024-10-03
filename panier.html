@@ -237,9 +237,9 @@
                 // Convertir le prix en nombre au cas où ce soit une chaîne
                 const price = parseFloat(item.price); 
                 total += price; // Ajouter le prix au total
-                return <p>${item.name} - $${price.toFixed(2)}</p>;
+                return `<p>${item.name} - $${price.toFixed(2)}</p>`;
             }).join('');
-            document.getElementById('total-price').innerText = $${total.toFixed(2)}; // Mettre à jour le total
+            document.getElementById('total-price').innerText = `$${total.toFixed(2)}`; // Mettre à jour le total
         }
     }
 
