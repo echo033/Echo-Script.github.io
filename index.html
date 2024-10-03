@@ -23,7 +23,7 @@
         }
 
         .parallax {
-            background-image: url('C:/Users/robin/Desktop/site/image.png'); 
+            background-image: url('image.png'); 
             min-height: 500px; 
             background-attachment: fixed; 
             background-position: top; 
@@ -144,27 +144,71 @@
             top: 30px; /* Positionne l'icône en haut du footer */
             cursor: pointer;
         }
+
+        /* Style pour le dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            background-color: #111;
+            color: #818181;
+            padding: 16px;
+            font-size: 25px;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            width: 100%; /* Prend toute la largeur */
+            outline: none;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #111;
+            min-width: 160px;
+            z-index: 1;
+            margin-left: 32px; /* Alignement à gauche */
+        }
+
+        .dropdown-content a {
+            color: #818181;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #575757;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block; /* Affiche le dropdown au survol */
+        }
     </style>
 </head>
 <body>
 
     <!-- Lien vers index.html lors du clic sur le logo -->
     <a href="index.html">
-        <img src="C:\Users\robin\Desktop\site\test.png" alt="Logo" class="logo"> <!-- Remplacez par le chemin de votre logo -->
+        <img src="test.png" alt="Logo" class="logo"> <!-- Remplacez par le chemin de votre logo -->
     </a>
 
     <!-- Bouton pour ouvrir la sidebar en haut à droite -->
     <span class="open-button" onclick="openNav()">&#9776;</span>
 
     <div id="mySidenav" class="sidenav">
-        <img src="C:\Users\robin\Desktop\site\test.png" alt="Logo" class="sidebar-logo"> <!-- Logo en haut à gauche de la sidebar -->
+        <img src="test.png" alt="Logo" class="sidebar-logo"> <!-- Logo en haut à gauche de la sidebar -->
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a href="index.html">Home</a>
         <a href="Cheat.html">Cheat</a>
         <a href="buy.html">Buy</a>
         <a href="#">Contact</a>
-    </div>
+        <a href="#">Langue</a>
 
+        </div>
+        
     <!-- Contenu principal -->
     <div id="main">
         <h1>Echo - Script</h1>
@@ -200,7 +244,7 @@
             <i class='fab fa-discord discord-icon'></i> <!-- Icône Discord à gauche du footer -->
         </a>
         &copy; Echo-Script 2024
-        <img src="C:\Users\robin\Desktop\site\test.png" alt="Logo" class="footer-logo"> <!-- Logo en dessous du footer -->
+        <img src="test.png" alt="Logo" class="footer-logo"> <!-- Logo en dessous du footer -->
         <a href="https://www.youtube.com" target="_blank"> <!-- Lien vers YouTube -->
             <i class='fab fa-youtube youtube-icon'></i> <!-- Icône YouTube à droite du footer -->
         </a>
