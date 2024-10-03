@@ -46,7 +46,7 @@
             border-radius: 3px;
         }
 
-        input[type=text] {
+        input[type=text], input[type=email] {
             width: 100%;
             margin-bottom: 20px;
             padding: 12px;
@@ -141,6 +141,21 @@
             line-height:1.25rem;
             cursor:pointer;
         }
+
+        .button-container {
+            display: flex; /* Utilise flexbox pour aligner les boutons */
+            justify-content: space-between; /* Espace entre les boutons */
+            margin-top: 20px; /* Marge au-dessus des boutons */
+        }
+
+        .paypal-container {
+            flex: 1; /* Permet au conteneur PayPal de prendre l'espace disponible */
+            margin-right: 10px; /* Marge à droite pour espacer les boutons */
+        }
+
+        .card-container {
+            flex: 1; /* Permet au conteneur Carte de prendre l'espace disponible */
+        }
     </style>
     <script src="https://www.paypal.com/sdk/js?client-id=ARbCgUioV1SEni2NwAtHOldrdZhEoWE0OLr2ES05cTAQB8EZpt99H41zdSx3LbCByoC5JRaw4hpe69-O"></script> <!-- Remplacez YOUR_CLIENT_ID par votre ID de client -->
 </head>
@@ -210,66 +225,41 @@
                 <label>
                     <input type="checkbox" checked="checked" name="sameadr"> Adresse de livraison identique à celle de facturation
                 </label>
-                <div id="paypal-button-container"></div> <!-- Conteneur pour le bouton PayPal -->
+                <div class="button-container"> <!-- Conteneur pour les boutons -->
+                    <div class="paypal-container">
+                        <div id="paypal-button-container"></div> <!-- Conteneur pour le bouton PayPal -->
+                    </div>
+                    <div class="card-container">
+                        <button type="submit" class="btn">Payer par Carte</button> <!-- Bouton pour payer par carte -->
+                    </div>
+                </div>
             </form>
         </div>
     </div>
     <div class="col-25">
         <div class="container">
             <hr>
-            <h3>Produits dans le panier</h3>
-            <div id="cart-items">Aucun produit dans le panier.</div> <!-- Ajout de cette ligne -->
+            <h4>Prix de l'Article</h4>
+            <p>Article <span class="price">€15</span></p>
+            <p>Livraison <span class="price">Gratuit</span></p>
             <hr>
-            <p>Total <span class="price" style="color:white"><b id="total-price">$0</b></span></p> <!-- Ajout d'un ID pour le total -->
-            <button id="clear-cart" class="btn">Vider le panier</button>
+            <p>Total <span class="price">€15</span></p>
         </div>
     </div>
 </div>
 
 <div class="footer">
-    &copy; Echo Script 2024 | <a href="https://discord.gg/dNXDrhuBqc" target="_blank"><i class="fab fa-discord"></i></a>
+    <h2>Echo-Script</h2>
 </div>
 
 <script>
-    // Fonction pour réinitialiser le panier
-    function resetCart() {
-        localStorage.removeItem('cart'); // Vider le panier
-        document.getElementById('cart-items').innerText = 'Aucun produit dans le panier.'; // Réinitialiser l'affichage
-        document.getElementById('total-price').innerText = '$0'; // Réinitialiser le total
-    }
-
-    document.getElementById('clear-cart').addEventListener('click', resetCart); // Écouteur d'événements pour le bouton Vider le panier
-
-    // Fonction pour charger les articles du panier et calculer le total
-    function loadCartItems() {
-        const cart = JSON.parse(localStorage.getItem('cart')) || []; // Récupérer le panier
-        const cartItemsElement = document.getElementById('cart-items');
-        let total = 0; // Initialiser le total
-
-        if (cart.length === 0) {
-            cartItemsElement.innerText = 'Aucun produit dans le panier.';
-            document.getElementById('total-price').innerText = '$0'; // Réinitialiser le total
-        } else {
-            cartItemsElement.innerHTML = cart.map(item => {
-                // Convertir le prix en nombre au cas où ce soit une chaîne
-                const price = parseFloat(item.price); 
-                total += price; // Ajouter le prix au total
-                return `<p>${item.name} - $${price.toFixed(2)}</p>`;
-            }).join('');
-            document.getElementById('total-price').innerText = `$${total.toFixed(2)}`; // Mettre à jour le total
-        }
-    }
-
-    // Appeler loadCartItems() au chargement de la page pour afficher le panier
-    window.onload = loadCartItems;
-
-    // Ajout du bouton PayPal
+    // Configuration du bouton PayPal
     paypal.Buttons({
         createOrder: function(data, actions) {
             return actions.order.create({
                 purchase_units: [{
                     amount: {
-                        value: document.getElementById('total-price').innerText.replace('$', '') // Montant à payer
+                        value: '15.00'
                     }
                 }]
             });
@@ -277,10 +267,9 @@
         onApprove: function(data, actions) {
             return actions.order.capture().then(function(details) {
                 alert('Transaction réussie par ' + details.payer.name.given_name);
-                // Ici, vous pouvez rediriger ou traiter la réponse après paiement
             });
         }
-    }).render('#paypal-button-container'); // Render le bouton PayPal dans le conteneur
+    }).render('#paypal-button-container'); // Affiche le bouton PayPal
 </script>
 
 </body>
