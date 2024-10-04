@@ -245,14 +245,12 @@
 
 <script>
     // Stripe API Setup
-    const stripe = Stripe('VOTRE_CLE_PUBLIQUE_STRIPE');
+    const stripe = Stripe('VOTRE_CLE_PUBLIQUE_STRIPE'); // Remplacez par votre clé publique Stripe
     const elements = stripe.elements();
     const cardElement = elements.create('card');
     cardElement.mount('#card-element');
 
-    // Récupération des éléments du DOM
-    const paymentForm = document.getElementById('payment-form');
-    const loading = document.getElementById('loading');
+    // Affichage du panier
     const cartItemsContainer = document.getElementById('cart-items');
     const totalPrice = document.getElementById('total-price');
     const clearCartButton = document.getElementById('clear-cart');
@@ -268,10 +266,12 @@
         } else {
             cart.forEach(item => {
                 cartItemsContainer.innerHTML += `<p>${item.name} <span class="price">$${item.price}</span></p>`;
-                total += item.price;
+                total += parseFloat(item.price); // S'assurer que le prix est bien un nombre
             });
-            totalPrice.textContent = `$${total.toFixed(2)}`;
         }
+
+        // Mise à jour de l'affichage du total
+        totalPrice.textContent = `$${total.toFixed(2)}`; // Afficher le total avec 2 décimales
     }
 
     // Fonction pour vider le panier
@@ -283,25 +283,41 @@
     // Afficher le panier au chargement de la page
     displayCart();
 
-    // Gestion de l'envoi du formulaire
-    paymentForm.addEventListener('submit', async (event) => {
+    // Soumission du formulaire de paiement
+    const form = document.getElementById('payment-form');
+    form.addEventListener('submit', async (event) => {
         event.preventDefault();
-        loading.style.display = 'flex'; // Afficher le loader
 
-        // Créer le token de carte
-        const {error, token} = await stripe.createToken(cardElement);
-        
+        // Afficher l'animation de chargement
+        document.getElementById('loading').style.display = 'flex';
+
+        const { paymentMethod, error } = await stripe.createPaymentMethod({
+            type: 'card',
+            card: cardElement,
+            billing_details: {
+                name: document.getElementById('cname').value,
+                email: document.getElementById('email').value,
+                address: {
+                    line1: document.getElementById('adr').value,
+                    city: document.getElementById('city').value,
+                    state: document.getElementById('state').value,
+                    postal_code: document.getElementById('zip').value,
+                },
+            },
+        });
+
         if (error) {
-            loading.style.display = 'none'; // Cacher le loader
-            alert(error.message); // Afficher l'erreur
+            // Afficher l'erreur si la création du mode de paiement échoue
+            document.getElementById('card-errors').textContent = error.message;
+            document.getElementById('loading').style.display = 'none'; // Masquer l'animation de chargement
         } else {
-            // Traitement du paiement avec le token
-            // Remplacez cette partie avec votre code serveur
-            console.log(token);
-            alert('Paiement réussi !');
-            loading.style.display = 'none'; // Cacher le loader
+            // Traitez le paiement avec paymentMethod.id
+            console.log('Paiement réussi avec le mode de paiement : ', paymentMethod.id);
+            // Ajoutez votre logique pour traiter le paiement ici
+            alert('Paiement réussi !'); // Alerte de succès
             localStorage.removeItem('cart'); // Vider le panier après le paiement
-            displayCart(); // Réafficher le panier
+            displayCart(); // Mettre à jour l'affichage du panier
+            document.getElementById('loading').style.display = 'none'; // Masquer l'animation de chargement
         }
     });
 </script>
