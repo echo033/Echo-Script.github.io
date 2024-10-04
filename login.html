@@ -23,6 +23,11 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             width: 300px;
             text-align: center;
+             /* Nouveau positionnement pour décaler le bloc vers la gauche */
+            position: absolute; /* Permet de placer l'élément avec top/left */
+            top: 50%; /* Centre verticalement */
+            left: 20%; /* Décale vers la gauche en fonction du pourcentage */
+            transform: translateY(-50%); /* Centrage vertical précis */
         }
 
         h1 {
