@@ -23,11 +23,6 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             width: 300px;
             text-align: center;
-             /* Nouveau positionnement pour décaler le bloc vers la gauche */
-            position: absolute; /* Permet de placer l'élément avec top/left */
-            top: 50%; /* Centre verticalement */
-            left: 20%; /* Décale vers la gauche en fonction du pourcentage */
-            transform: translateY(-50%); /* Centrage vertical précis */
         }
 
         h1 {
@@ -47,6 +42,7 @@
         button {
             width: 100%;
             padding: 10px;
+            margin: 15px 0; /* Ajout d'une marge supérieure pour le décalage */
             background-color: #4CAF50;
             border: none;
             border-radius: 5px;
@@ -64,8 +60,21 @@
         }
 
         .alternative-login button {
-            background-color: #555;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
             margin: 5px 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .alternative-login button i {
+            margin-right: 10px;
         }
 
         .alternative-login button.google {
@@ -84,33 +93,30 @@
             color: #bbb;
             font-size: 14px;
         }
-
-        .login-link a {
-            color: #4CAF50;
-            text-decoration: none;
-        }
-
-        .login-link a:hover {
-            text-decoration: underline;
-        }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
-<div class="login-container">
-    <h1>Login</h1>
-    <form action="mail.php" method="POST">
-        <input type="email" name="email" placeholder="Adresse e-mail" required>
-        <button type="submit">Continuer</button>
-    </form>
-    <p class="login-link">Vous n'avez pas de compte ? <a href="#">Créer un compte</a></p>
+    <div class="login-container">
+        <h1>Login</h1>
+        <input type="email" placeholder="Adresse e-mail">
+        <button>Se connecter</button>
+        
+        <div class="alternative-login">
+            <button class="google" onclick="window.location.href='https://accounts.google.com/signin'">
+                <i class="fab fa-google"></i> Continuer avec Google
+            </button>
+            <button class="microsoft" onclick="window.location.href='https://login.microsoftonline.com/'">
+                <i class="fab fa-microsoft"></i> Continuer avec Microsoft
+            </button>
+            <button class="apple" onclick="window.location.href='https://appleid.apple.com/auth/signin'">
+                <i class="fab fa-apple"></i> Continuer avec Apple
+            </button>
+        </div>
 
-    <div class="alternative-login">
-        <button class="google">Continuer avec Google</button>
-        <button class="microsoft">Continuer avec Microsoft</button>
-        <button class="apple">Continuer avec Apple</button>
+        <p class="login-link">Vous avez déjà un compte ? <a href="#">Connexion</a></p>
     </div>
-</div>
 
 </body>
 </html>
