@@ -15,7 +15,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            position: relative; /* Ajouté pour positionner le bouton retour */
+            position: relative;
         }
 
         .login-container {
@@ -32,7 +32,7 @@
         }
 
         input[type="email"] {
-            width: 98%; /* Ajusté pour centrer un peu plus */
+            width: 100%;
             padding: 10px;
             margin: 10px 0;
             border-radius: 5px;
@@ -44,7 +44,7 @@
         button {
             width: 100%;
             padding: 10px;
-            margin: 15px 0; /* Ajout d'une marge supérieure pour le décalage */
+            margin: 15px 0;
             background-color: #4CAF50;
             border: none;
             border-radius: 5px;
@@ -92,32 +92,41 @@
         }
 
         .login-link {
-            color: #4CAF50; /* Le texte "Créer un compte" est maintenant en vert */
+            color: #bbb;
             font-size: 14px;
         }
 
+        .login-link a {
+            color: #4CAF50; /* Texte "Créer un compte" en vert */
+        }
+
+        /* Bouton retour à l'accueil */
         .back-to-home {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
+            top: 10px;
+            right: 10px;
         }
 
         .back-to-home img {
-            width: 50px; /* Taille du logo */
+            width: 50px;
             height: 50px;
+            cursor: pointer;
         }
+
+        .back-to-home img:hover {
+            opacity: 0.8;
+        }
+
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
-    <!-- Bouton de retour à la page d'accueil avec le logo -->
-    <button class="back-to-home" onclick="window.location.href='index.html'">
-        <img src="test.png" alt="Retour à l'accueil">
-    </button>
+    <!-- Bouton retour à l'accueil -->
+    <div class="back-to-home">
+        <a href="index.html">
+            <img src="test.png" alt="Retour à l'accueil">
+        </a>
+    </div>
 
     <div class="login-container">
         <h1>Login</h1>
@@ -136,7 +145,7 @@
             </button>
         </div>
 
-        <p class="login-link">Vous n'avez pas encore de compte ? <a href="#" style="color: #4CAF50;">Créer un compte</a></p> <!-- Texte modifié ici en vert -->
+        <p class="login-link">Vous n'avez pas de compte ? <a href="#">Créer un compte</a></p>
     </div>
 
 </body>
