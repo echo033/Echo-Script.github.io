@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="logo.png"> <!-- Favicon ajouté ici -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212; /* Fond noir */
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+        }
+
+        .signup-container {
+            background-color: #1e1e1e; /* Fond sombre pour le formulaire */
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+            background-color: #333;
+            color: #fff;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 15px 0;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .login-link {
+            color: #bbb;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: #4CAF50; /* Texte "Créer un compte" en vert */
+        }
+
+        /* Bouton retour à l'accueil */
+        .back-to-home {
+            position: absolute;
+            top: 10px;
+            left: 10px; /* Positionné à gauche */
+        }
+
+        .back-to-home img {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+
+        .back-to-home img:hover {
+            opacity: 0.8;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Bouton retour à l'accueil -->
+    <div class="back-to-home">
+        <a href="index.html">
+            <img src="test.png" alt="Retour à l'accueil">
+        </a>
+    </div>
+
+    <div class="signup-container">
+        <h1>Sign Up</h1>
+        <input type="email" placeholder="Adresse e-mail">
+        <input type="password" placeholder="Mot de passe">
+        <input type="password" placeholder="Confirmer le mot de passe">
+        <button>S'inscrire</button>
+        <p class="login-link">Vous avez déjà un compte ? <a href="login.html">Se connecter</a></p>
+    </div>
+
+</body>
+</html>
