@@ -32,7 +32,8 @@
         }
 
         input[type="email"],
-        input[type="password"] {
+        input[type="password"],
+        input[type="text"] {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -97,10 +98,13 @@
 
     <div class="signup-container">
         <h1>Sign Up</h1>
-        <input type="email" placeholder="Adresse e-mail">
-        <input type="password" placeholder="Mot de passe">
-        <input type="password" placeholder="Confirmer le mot de passe">
-        <button>S'inscrire</button>
+        <form action="signup.php" method="POST">
+            <input type="text" name="username" placeholder="Nom d'utilisateur" required>
+            <input type="email" name="email" placeholder="Adresse e-mail" required>
+            <input type="password" name="password" placeholder="Mot de passe" required>
+            <input type="password" name="confirm_password" placeholder="Confirmer le mot de passe" required>
+            <button type="submit">S'inscrire</button>
+        </form>
         <p class="login-link">Vous avez déjà un compte ? <a href="login.html">Se connecter</a></p>
     </div>
 
