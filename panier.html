@@ -157,6 +157,7 @@
             }
         }
     </style>
+    <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
     
@@ -169,7 +170,7 @@
 <div class="row">
     <div class="col-75">
         <div class="container">
-            <form id="payment-form" onsubmit="showLoading(); return false;">
+            <form id="payment-form">
                 <div class="row">
                     <div class="col-50">
                         <h3>Adresse de Facturation</h3>
@@ -205,26 +206,18 @@
                         </div>
                         <label for="cname">Nom sur la Carte</label>
                         <input type="text" id="cname" name="cardname" placeholder="John More Doe">
-                        <label for="ccnum">Numéro de Carte</label>
-                        <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
-                        <label for="expmonth">Mois d'Expiration</label>
-                        <input type="text" id="expmonth" name="expmonth" placeholder="Septembre">
-                        <div class="row">
-                            <div class="col-50">
-                                <label for="expyear">Année d'Expiration</label>
-                                <input type="text" id="expyear" name="expyear" placeholder="2024">
-                            </div>
-                            <div class="col-50">
-                                <label for="cvv">CVV</label>
-                                <input type="text" id="cvv" name="cvv" placeholder="352">
-                            </div>
-                        </div>
+
+                        <!-- Stripe Elements pour le numéro de carte -->
+                        <label for="card-element">Numéro de Carte</label>
+                        <div id="card-element" style="padding: 10px; border: 1px solid #666; border-radius: 3px; background-color: #333;"></div>
+                        <div id="card-errors" role="alert" style="color: red;"></div>
+
                     </div>
                 </div>
                 <label>
                     <input type="checkbox" checked="checked" name="sameadr"> Adresse de livraison identique à celle de facturation
                 </label>
-                <input type="submit" value="Continuer vers le paiement" class="btn">
+                <button id="submit" class="btn">Continuer vers le paiement</button>
             </form>
         </div>
     </div>
@@ -251,45 +244,69 @@
 </div>
 
 <script>
-    // Fonction pour réinitialiser le panier
-    function resetCart() {
-        localStorage.removeItem('cart'); // Vider le panier
-        document.getElementById('cart-items').innerText = 'Aucun produit dans le panier.'; // Réinitialiser l'affichage
-        document.getElementById('total-price').innerText = '$0'; // Réinitialiser le total
-    }
+    // Stripe API Setup
+    const stripe = Stripe('VOTRE_CLE_PUBLIQUE_STRIPE');
+    const elements = stripe.elements();
+    const cardElement = elements.create('card');
+    cardElement.mount('#card-element');
 
-    document.getElementById('clear-cart').addEventListener('click', resetCart); // Écouteur d'événements pour le bouton Vider le panier
+    // Gestionnaire du formulaire de paiement
+    const form = document.getElementById('payment-form');
+    const loading = document.getElementById('loading');
+    const submitButton = document.getElementById('submit');
 
-    // Fonction pour charger les articles du panier et calculer le total
-    function loadCartItems() {
-        const cart = JSON.parse(localStorage.getItem('cart')) || []; // Récupérer le panier
-        const cartItemsElement = document.getElementById('cart-items');
-        let total = 0; // Initialiser le total
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        loading.style.display = 'flex';
 
-        if (cart.length === 0) {
-            cartItemsElement.innerText = 'Aucun produit dans le panier.';
-            document.getElementById('total-price').innerText = '$0'; // Réinitialiser le total
+        const { token, error } = await stripe.createToken(cardElement);
+        if (error) {
+            document.getElementById('card-errors').textContent = error.message;
+            loading.style.display = 'none';
         } else {
-            cartItemsElement.innerHTML = cart.map(item => {
-                // Convertir le prix en nombre au cas où ce soit une chaîne
-                const price = parseFloat(item.price); 
-                total += price; // Ajouter le prix au total
-                return `<p>${item.name} - $${price.toFixed(2)}</p>`;
-            }).join('');
-            document.getElementById('total-price').innerText = `$${total.toFixed(2)}`; // Mettre à jour le total
+            document.getElementById('card-errors').textContent = '';
+            const response = await fetch('/process_payment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    token: token.id,
+                    email: document.getElementById('email').value,
+                    name: document.getElementById('fname').value
+                })
+            });
+
+            const result = await response.json();
+            loading.style.display = 'none';
+            if (result.success) {
+                alert('Paiement réussi !');
+            } else {
+                alert('Erreur de paiement. Réessayez.');
+            }
         }
+    });
+
+    // Gestion du panier (exemple de base)
+    const cartItems = document.getElementById('cart-items');
+    const totalPrice = document.getElementById('total-price');
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function displayCart() {
+        cartItems.innerHTML = '';
+        let total = 0;
+        cart.forEach(item => {
+            cartItems.innerHTML += `<p>${item.name} <span class="price">$${item.price}</span></p>`;
+            total += item.price;
+        });
+        totalPrice.textContent = `$${total.toFixed(2)}`;
     }
 
-    // Fonction pour afficher l'animation de chargement et rediriger vers la page de paiement
-    function showLoading() {
-        document.getElementById('loading').style.display = 'flex'; // Afficher l'animation
-        setTimeout(() => {
-            window.location.href = 'paiement.html'; // Rediriger vers la page de paiement
-        }, 2000); // Délai de 2 secondes
-    }
+    document.getElementById('clear-cart').addEventListener('click', () => {
+        cart = [];
+        localStorage.setItem('cart', JSON.stringify(cart));
+        displayCart();
+    });
 
-    // Appeler loadCartItems() au chargement de la page pour afficher le panier
-    window.onload = loadCartItems;
+    displayCart();
 </script>
 
 </body>
