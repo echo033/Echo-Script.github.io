@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="logo.png"> <!-- Favicon ajouté ici -->
+    <link rel="icon" type="image/png" href="logo.png">
     <title>Echo-Script boutique</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Style global */
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background-color: #202020; /* Fond gris sombre */
-            color: #f5f5f5; /* Couleur du texte */
+            background-color: #000; /* Fond noir */
+            color: #f4f4f4; /* Couleur du texte */
             margin: 0;
             padding: 0;
             display: flex;
@@ -24,115 +24,88 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #282828; /* Fond de la barre de navigation, gris foncé */
+            background-color: #111;
             padding: 15px 30px;
             position: sticky;
             top: 0;
             z-index: 1000;
-            transition: background-color 0.3s;
         }
 
         .navbar a {
-            color: #f5f5f5;
+            color: #f4f4f4;
             text-decoration: none;
             font-size: 18px;
             font-weight: bold;
-            margin: 0 10px;
-        }
-
-        .navbar .logo {
-            font-size: 24px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .navbar a:hover {
-            color: #4A90E2; /* Couleur bleu au survol */
         }
 
         .navbar .cart-icon {
             font-size: 24px;
             cursor: pointer;
-            color: #fff; /* Icône du panier en blanc */
+            color: #fff;
         }
 
-        .cart-icon:hover {
-            color: #fff; /* Couleur bleu clair au survol */
+        /* Titre principal */
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #fff;
         }
 
-        /* Section des produits */
+        /* Section des produits avec des petites cartes rectangulaires */
         .products {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
             gap: 20px;
-            padding: 30px;
         }
 
         /* Carte produit */
         .product-card {
-            background-color: #2E2E2E; /* Fond sombre des cartes */
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s, box-shadow 0.3s;
+            background-color: #1e1e1e;
+            width: 200px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #4b0082; /* Bordure bleu-violet */
+            transition: box-shadow 0.3s;
         }
 
         .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 10px #4b0082; /* Effet de survol */
         }
 
         .product-card img {
-            width: 100%;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            border: 2px solid #4A90E2; /* Bordure bleu autour des images */
+            width: 30px;
+            height: 30px;
         }
 
-        .product-card h3 {
-            color: #fff;
-            font-size: 20px;
-            margin-bottom: 10px;
+        .product-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-left: 10px;
         }
 
-        .product-card p {
-            color: #cfcfcf;
+        .product-details h3 {
+            margin: 0;
             font-size: 16px;
-            margin-bottom: 15px;
-        }
-
-        .product-card .price {
-            color: #f5f5f5;
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-
-        .product-card button {
-            background-color: #4A90E2; /* Bouton bleu */
-            border: none;
-            padding: 10px 20px;
             color: #fff;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s, transform 0.3s;
         }
 
-        .product-card button:hover {
-            background-color: #357ABD; /* Couleur plus foncée au survol */
-            transform: scale(1.05);
-        }
-
-        .logo-img {
-            width: 55px; /* Ajuste cette valeur selon la taille souhaitée */
-            height: auto; /* Cela garantit que l'image conserve ses proportions */
+        .product-details p {
+            margin: 0;
+            font-size: 12px;
+            color: #00ff00; /* Couleur verte pour le statut */
         }
 
         /* Footer */
         footer {
-            background-color: #282828;
-            color: #b1b1b1;
+            background-color: #111;
+            color: #818181;
             text-align: center;
             padding: 10px;
             margin-top: auto;
@@ -141,15 +114,6 @@
         footer a {
             color: #fff;
             text-decoration: none;
-            margin: 0 5px;
-        }
-
-        footer a:hover {
-            color: #4A90E2; /* Couleur bleu au survol */
-        }
-
-        footer i {
-            font-size: 24px;
         }
 
     </style>
@@ -158,40 +122,40 @@
 
     <!-- Barre de navigation -->
     <nav class="navbar">
-        <a href="index.html">
-            <img src="test.png" alt="Logo" class="logo-img">
-        </a>        
-        <!-- Modification ici pour rediriger vers la page panier -->
+        <a href="index.html">Accueil</a>
         <a href="panier.html" class="cart-icon">
             <i class="fa-solid fa-basket-shopping"></i>
         </a>
     </nav>
 
+    <!-- Titre principal -->
+    <h1>STATUS</h1>
+
     <!-- Section des produits -->
     <section class="products">
         <!-- Exemple de produit -->
-        <div class="product-card" data-id="1" data-name="Fortnite Cheat" data-price="20">
-            <img src="fortnite.png" alt="">
-            <h3>Fortnite</h3>
-            <p>The best Fortnite cheat</p>
-            <div class="price">€20</div>
-            <button onclick="addToCart(this)">Ajouter au panier</button>
+        <div class="product-card">
+            <img src="shield.png" alt="Icone">
+            <div class="product-details">
+                <h3>Fortnite</h3>
+                <p>Updated</p>
+            </div>
         </div>
 
-        <div class="product-card" data-id="2" data-name="GTA 5 Mod Menu" data-price="10">
-            <img src="gta.png" alt="">
-            <h3>GTA 5</h3>
-            <p>The mod menu you want</p>
-            <div class="price">€10</div>
-            <button onclick="addToCart(this)">Ajouter au panier</button>
+        <div class="product-card">
+            <img src="shield.png" alt="Icone">
+            <div class="product-details">
+                <h3>GTA 5</h3>
+                <p>Updated</p>
+            </div>
         </div>
 
-        <div class="product-card" data-id="3" data-name="SCP SL - Script" data-price="10">
-            <img src="scp.png" alt="">
-            <h3>SCP SL</h3>
-            <p>You will kill moderator</p>
-            <div class="price">€10</div>
-            <button onclick="addToCart(this)">Ajouter au panier</button>
+        <div class="product-card">
+            <img src="shield.png" alt="Icone">
+            <div class="product-details">
+                <h3>Discord Nitro</h3>
+                <p>Updated</p>
+            </div>
         </div>
 
         <!-- Ajoutez d'autres produits de la même manière -->
@@ -201,34 +165,6 @@
     <footer>
         &copy; Echo Script 2024 | <a href="https://discord.gg/dNXDrhuBqc" target="_blank"><i class="fab fa-discord"></i></a>
     </footer>
-
-    <script>
-        // Fonction pour ajouter au panier
-        let cartCount = localStorage.getItem('cartCount') ? parseInt(localStorage.getItem('cartCount')) : 0;
-
-        function addToCart(button) {
-            const productCard = button.parentElement;
-            const productId = productCard.getAttribute('data-id');
-            const productName = productCard.getAttribute('data-name');
-            const productPrice = productCard.getAttribute('data-price');
-
-            // Créer un objet produit
-            const product = {
-                id: productId,
-                name: productName,
-                price: productPrice
-            };
-
-            // Ajouter le produit au panier dans localStorage
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cart.push(product);
-            localStorage.setItem('cart', JSON.stringify(cart));
-
-            // Incrémenter le compteur du panier
-            cartCount++;
-            localStorage.setItem('cartCount', cartCount);
-        }
-    </script>
 
 </body>
 </html>
