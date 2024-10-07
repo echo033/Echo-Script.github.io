@@ -21,15 +21,32 @@
 
         h1 {
             text-align: center;
+            z-index: 2; /* Le texte doit être visible par-dessus la vidéo */
+            position: relative;
+            color: white;
         }
 
         .parallax {
-            background-image: url('image.png'); 
-            min-height: 500px; 
-            background-attachment: fixed; 
-            background-position: top; 
-            background-repeat: no-repeat;
-            background-size: cover; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .parallax video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+            background-size: cover;
         }
 
         .logo {
@@ -38,6 +55,7 @@
             left: 20px; 
             height: 40px;
             cursor: pointer; 
+            z-index: 2;
         }
 
         .sidebar-logo {
@@ -54,13 +72,14 @@
             font-size: 30px;
             cursor: pointer;
             color: white;
+            z-index: 2;
         }
 
         .sidenav {
             height: 100%;
             width: 0;
             position: fixed;
-            z-index: 1;
+            z-index: 3;
             top: 0;
             left: 0; 
             background-color: #111;
@@ -94,7 +113,7 @@
             padding: 16px;
             transition: margin-left 0.5s;
             flex: 1; 
-            background-color: #000;
+            z-index: 2;
         }
 
         pre {
@@ -105,48 +124,43 @@
             overflow: auto;
             position: relative;
             margin: 20px 0;
-            white-space: pre-wrap; /* Pour conserver les sauts de ligne et les espaces */
+            white-space: pre-wrap;
         }
 
-        /* Style du footer */
         footer {
-            background-color: #111; /* Fond du footer */
-            color: #818181; /* Couleur du texte du footer */
-            text-align: center; /* Centre le texte */
-            padding: 10px; /* Espacement interne */
-            position: relative; /* Positionnement normal */
-            transition: transform 0.3s; /* Transition douce pour le mouvement */
-            transform: translateY(0); /* Position initiale */
+            background-color: #111;
+            color: #818181;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            z-index: 2;
+            transform: translateY(0);
         }
 
-        /* Logo en dessous du footer */
         .footer-logo {
-            display: block; /* Affiche le logo */
-            margin: 10px auto; /* Centre le logo */
-            height: 40px; /* Hauteur du logo */
+            display: block;
+            margin: 10px auto;
+            height: 40px;
         }
 
-        /* Icône Discord à gauche dans le footer */
         .discord-icon {
             font-size: 24px;
-            color: #7289da; /* Couleur de l'icône Discord */
+            color: #7289da;
             position: absolute;
-            left: 850px; /* Positionne l'icône à gauche */
-            top: 30px; /* Positionne l'icône en haut du footer */
+            left: 850px;
+            top: 30px;
             cursor: pointer;
         }
 
-        /* Icône YouTube à droite dans le footer */
         .youtube-icon {
             font-size: 24px;
-            color: #ff0000; /* Couleur de l'icône YouTube (rouge) */
+            color: #ff0000;
             position: absolute;
-            right: 850px; /* Positionne l'icône à droite */
-            top: 30px; /* Positionne l'icône en haut du footer */
+            right: 850px;
+            top: 30px;
             cursor: pointer;
         }
 
-        /* Style pour le dropdown */
         .dropdown {
             position: relative;
             display: inline-block;
@@ -160,7 +174,7 @@
             border: none;
             cursor: pointer;
             text-align: left;
-            width: 100%; /* Prend toute la largeur */
+            width: 100%;
             outline: none;
         }
 
@@ -170,7 +184,7 @@
             background-color: #111;
             min-width: 160px;
             z-index: 1;
-            margin-left: 32px; /* Alignement à gauche */
+            margin-left: 32px;
         }
 
         .dropdown-content a {
@@ -185,7 +199,7 @@
         }
 
         .dropdown:hover .dropdown-content {
-            display: block; /* Affiche le dropdown au survol */
+            display: block;
         }
     </style>
 </head>
@@ -212,8 +226,13 @@
     <div id="main">
         <h1>Echo - Script</h1>
         
-        <!-- Image Parallax -->
-        <div class="parallax"></div>
+        <!-- Video Parallax -->
+        <div class="parallax">
+            <video autoplay muted loop>
+                <source src="video.mp4" type="video/mp4">
+                Your browser does not support HTML5 video.
+            </video>
+        </div>
 
         <!-- Intégration du Typewriter -->
         <pre id="codeBlock"></pre> <!-- Element pré pour le typewriter -->
@@ -231,7 +250,6 @@
                 }
             }
 
-            // Appeler la fonction typeWriter() automatiquement au chargement de la page
             window.onload = function() {
                 typeWriter();
             };
@@ -250,31 +268,28 @@
     </footer>
 
     <script>
-        // Gérer l'affichage du footer
-        let lastScrollTop = 0; // Dernière position de défilement
+        let lastScrollTop = 0;
         const footer = document.getElementById('footer');
 
         window.addEventListener('scroll', function() {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             if (scrollTop > lastScrollTop) {
-                // Défilement vers le bas
-                footer.style.transform = 'translateY(100%)'; // Masque le footer
+                footer.style.transform = 'translateY(100%)';
             } else {
-                // Défilement vers le haut
-                footer.style.transform = 'translateY(0)'; // Affiche le footer
+                footer.style.transform = 'translateY(0)';
             }
-            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Pour éviter les valeurs négatives
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
         });
 
         function openNav() {
             document.getElementById("mySidenav").style.width = "250px";
-            document.getElementById("main").style.marginLeft = "250px"; /* Déplacer le contenu à droite quand la sidebar est ouverte */
+            document.getElementById("main").style.marginLeft = "250px";
             document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
         }
 
         function closeNav() {
             document.getElementById("mySidenav").style.width = "0";
-            document.getElementById("main").style.marginLeft = "0"; /* Remettre le contenu à sa place quand la sidebar est fermée */
+            document.getElementById("main").style.marginLeft = "0";
             document.body.style.backgroundColor = "#000";
         }
     </script>
